@@ -34,7 +34,7 @@ module Sidekiq
 
           Sidekiq::Monitor::Job.where(status: 'queued').each do |job|
             if !queued_jids.include?(job.jid) && !is_ignored_queue?(job.queue)
-              job.update_attributes(
+              job.update_attribute(
                 finished_at: DateTime.now,
                 status: 'interrupted'
               )
@@ -56,7 +56,7 @@ module Sidekiq
 
           Sidekiq::Monitor::Job.where(status: 'running').each do |job|
             if !busy_jids.include?(job.jid) && !is_ignored_queue?(job.queue)
-              job.update_attributes(
+              job.update_attribute(
                 finished_at: DateTime.now,
                 status: 'interrupted'
               )

@@ -8,7 +8,7 @@ module Sidekiq
 
       def start(worker, item, queue)
         job = find_or_initialize_job(worker, item, queue)
-        job.update_attributes(
+        job.update_attribute(
           started_at: DateTime.now,
           status: 'running'
         )
@@ -21,7 +21,7 @@ module Sidekiq
 
       def complete(worker, item, queue, return_value)
         job = find_or_initialize_job(worker, item, queue)
-        job.update_attributes(
+        job.update_attribute(
           finished_at: DateTime.now,
           status: 'complete',
           result: (return_value if return_value.is_a?(Hash))
@@ -82,7 +82,7 @@ module Sidekiq
           message: "#{exception.class.name}: #{exception.message}",
           backtrace: exception.backtrace
         })
-        job.update_attributes(
+        job.update_attribute(
           finished_at: DateTime.now,
           status: 'failed',
           result: result
