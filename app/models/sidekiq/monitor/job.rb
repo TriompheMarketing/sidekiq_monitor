@@ -4,8 +4,8 @@ module Sidekiq
       self.table_name = 'sidekiq_jobs'
       attr_accessible :args, :class_name, :enqueued_at, :finished_at, :jid, :name, :queue, :result, :retry, :started_at, :status if ActiveRecord::VERSION::MAJOR < 4 || ActiveRecord.constants.include?(:MassAssignmentSecurity)
 
-      serialize :args, coder: JSON
-      serialize :result, coder: JSON
+      serialize :args, coder: ActiveRecord::Coders::YAMLColumn, type: Array
+      serialize :result, coder: ActiveRecord::Coders::YAMLColumn, type: Array
 
       after_destroy :delete_sidekiq_job
 
