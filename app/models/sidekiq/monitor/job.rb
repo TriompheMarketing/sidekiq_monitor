@@ -5,7 +5,7 @@ module Sidekiq
       attr_accessible :args, :class_name, :enqueued_at, :finished_at, :jid, :name, :queue, :result, :retry, :started_at, :status if ActiveRecord::VERSION::MAJOR < 4 || ActiveRecord.constants.include?(:MassAssignmentSecurity)
 
       serialize :args, coder: ActiveRecord::Coders::YAMLColumn, type: Array
-      serialize :result, coder: ActiveRecord::Coders::YAMLColumn, type: Array
+      serialize :result, coder: ActiveRecord::Coders::YAMLColumn, type: Hash
 
       after_destroy :delete_sidekiq_job
 
